@@ -22,9 +22,11 @@ import org.springframework.core.env.PropertySource;
 
 /**
  * Abstract {@link DubboConfigBinder} implementation
+ * 提供默认的属性。
  */
 public abstract class AbstractDubboConfigBinder implements DubboConfigBinder {
 
+    // PropertySource 数组（迭代）
     private Iterable<PropertySource<?>> propertySources;
 
     private boolean ignoreUnknownFields = true;

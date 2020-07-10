@@ -35,11 +35,12 @@ import java.lang.annotation.Target;
  * @see Service
  * @see Reference
  * @since 2.5.7
+ * 配置要扫描 @Service 和 @Reference 注解的包或者类们，从而创建对应的 Bean 对象。
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(DubboComponentScanRegistrar.class)
+@Import(DubboComponentScanRegistrar.class)  // 表明使用 DubboComponentScanRegistrar 类进行导入
 public @interface DubboComponentScan {
 
     /**
@@ -48,6 +49,7 @@ public @interface DubboComponentScan {
      * {@code @DubboComponentScan(basePackages="org.my.pkg")}.
      *
      * @return the base packages to scan
+     * 和 {@link #basePackages()} 等价
      */
     String[] value() default {};
 
@@ -59,6 +61,7 @@ public @interface DubboComponentScan {
      * package names.
      *
      * @return the base packages to scan
+     * 要扫描的包的数组
      */
     String[] basePackages() default {};
 
@@ -68,6 +71,7 @@ public @interface DubboComponentScan {
      * scanned.
      *
      * @return classes from the base packages to scan
+     * 要扫描的类的数组
      */
     Class<?>[] basePackageClasses() default {};
 

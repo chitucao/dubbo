@@ -48,13 +48,14 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(DubboConfigBindingRegistrar.class)
+@Import(DubboConfigBindingRegistrar.class)  // 表明使用 DubboConfigBindingRegistrar 类进行导入
 public @interface EnableDubboConfigBinding {
 
     /**
      * The name prefix of the properties that are valid to bind to {@link AbstractConfig Dubbo Config}.
      *
      * @return the name prefix of the properties to bind
+     * 配置前缀
      */
     String prefix();
 
@@ -64,6 +65,7 @@ public @interface EnableDubboConfigBinding {
      * @see ApplicationConfig
      * @see ModuleConfig
      * @see RegistryConfig
+     * 配置类
      */
     Class<? extends AbstractConfig> type();
 
@@ -71,6 +73,7 @@ public @interface EnableDubboConfigBinding {
      * It indicates whether {@link #prefix()} binding to multiple Spring Beans.
      *
      * @return the default value is <code>false</code>
+     * 是否 multiple
      */
     boolean multiple() default false;
 

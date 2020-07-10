@@ -33,6 +33,9 @@ import org.springframework.util.Assert;
  * @see EnableDubboConfigBindings
  * @see DubboConfigBindingRegistrar
  * @since 2.5.8
+ *
+ * 注册相应的 Dubbo AbstractConfig 到 Spring 容器中。
+ * @see  DubboConfigBindingRegistrar#registerBeanDefinitions
  */
 public class DubboConfigBindingsRegistrar implements ImportBeanDefinitionRegistrar, EnvironmentAware {
 
@@ -41,18 +44,19 @@ public class DubboConfigBindingsRegistrar implements ImportBeanDefinitionRegistr
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
 
-        AnnotationAttributes attributes = AnnotationAttributes.fromMap(
-                importingClassMetadata.getAnnotationAttributes(EnableDubboConfigBindings.class.getName()));
+        // <1.1> 获得 @EnableDubboConfigBindings 注解
+        AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableDubboConfigBindings.class.getName()));
 
+        // <1.2> 获得内部的 @EnableDubboConfigBinding 注解的数组
         AnnotationAttributes[] annotationAttributes = attributes.getAnnotationArray("value");
 
+        // <2> 创建 DubboConfigBindingRegistrar 对象，并设置 environment 属性
         DubboConfigBindingRegistrar registrar = new DubboConfigBindingRegistrar();
         registrar.setEnvironment(environment);
 
+        // <3> 遍历 annotationAttributes 数组，使用 registrar 进行逐个 @EnableDubboConfigBinding 注解的注册对应的 Bean
         for (AnnotationAttributes element : annotationAttributes) {
-
             registrar.registerBeanDefinitions(element, registry);
-
         }
     }
 

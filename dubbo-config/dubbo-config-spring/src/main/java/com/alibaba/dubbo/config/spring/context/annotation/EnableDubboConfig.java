@@ -61,12 +61,15 @@ import java.lang.annotation.Target;
  * @see DubboConfigConfiguration
  * @see DubboConfigConfigurationRegistrar
  * @since 2.5.8
+ *
+ * 开启dubbo配置
+ * 用于dubbo的外部化配置
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-@Import(DubboConfigConfigurationRegistrar.class)
+@Import(DubboConfigConfigurationRegistrar.class)  // 表明使用 DubboConfigConfigurationRegistrar 类进行导入
 public @interface EnableDubboConfig {
 
     /**
@@ -77,6 +80,7 @@ public @interface EnableDubboConfig {
      *
      * @return the default value is <code>true</code> since 2.6.6, the value is inverse earlier.
      * @revised 2.5.9
+     * 配置是否绑定到多个 Spring Bean 上
      */
     boolean multiple() default true;
 
