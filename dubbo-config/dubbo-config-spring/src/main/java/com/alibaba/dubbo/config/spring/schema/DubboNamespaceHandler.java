@@ -32,7 +32,7 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 /**
  * DubboNamespaceHandler
  *
- * @export
+ * @see #init  定义了每个 <xsd:element /> 对应的 org.springframework.beans.factory.xml.BeanDefinitionParser
  */
 public class DubboNamespaceHandler extends NamespaceHandlerSupport {
 
@@ -49,6 +49,7 @@ public class DubboNamespaceHandler extends NamespaceHandlerSupport {
         registerBeanDefinitionParser("provider", new DubboBeanDefinitionParser(ProviderConfig.class, true));
         registerBeanDefinitionParser("consumer", new DubboBeanDefinitionParser(ConsumerConfig.class, true));
         registerBeanDefinitionParser("protocol", new DubboBeanDefinitionParser(ProtocolConfig.class, true));
+        // 无论是 ServiceBean 还是 ReferenceBean ，在解析完具体配置后，需要调用它们对应的方法进行初始化。
         registerBeanDefinitionParser("service", new DubboBeanDefinitionParser(ServiceBean.class, true));
         registerBeanDefinitionParser("reference", new DubboBeanDefinitionParser(ReferenceBean.class, false));
         registerBeanDefinitionParser("annotation", new AnnotationBeanDefinitionParser());
