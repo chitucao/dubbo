@@ -23,6 +23,7 @@ import java.lang.management.MonitorInfo;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
 
+//JVM工具类，目前只有打印栈信息的功能。
 public class JVMUtil {
     public static void jstack(OutputStream stream) throws Exception {
         ThreadMXBean threadMxBean = ManagementFactory.getThreadMXBean();

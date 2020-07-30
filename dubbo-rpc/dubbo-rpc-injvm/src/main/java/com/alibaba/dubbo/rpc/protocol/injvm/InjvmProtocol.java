@@ -30,13 +30,15 @@ import com.alibaba.dubbo.rpc.support.ProtocolUtils;
 import java.util.Map;
 
 /**
- * InjvmProtocol
+ * Injvm协议实现类
  */
 public class InjvmProtocol extends AbstractProtocol implements Protocol {
 
-    public static final String NAME = Constants.LOCAL_PROTOCOL;
+    public static final String NAME = Constants.LOCAL_PROTOCOL;     //协议名
 
-    public static final int DEFAULT_PORT = 0;
+    public static final int DEFAULT_PORT = 0;   //协议端口
+
+    //懒汉式单例 通过SPI加载(getInjvmProtocol)
     private static InjvmProtocol INSTANCE;
 
     public InjvmProtocol() {

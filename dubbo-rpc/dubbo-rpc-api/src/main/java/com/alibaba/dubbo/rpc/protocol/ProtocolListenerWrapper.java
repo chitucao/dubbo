@@ -31,7 +31,8 @@ import com.alibaba.dubbo.rpc.listener.ListenerInvokerWrapper;
 import java.util.Collections;
 
 /**
- * ListenerProtocol
+ * 用于给 Exporter 增加 ExporterListener
+ * 实现 Protocol 接口，Protocol 的 Wrapper 拓展实现类， ，监听 Exporter 暴露完成和取消暴露完成。
  */
 public class ProtocolListenerWrapper implements Protocol {
 
@@ -54,9 +55,12 @@ public class ProtocolListenerWrapper implements Protocol {
         if (Constants.REGISTRY_PROTOCOL.equals(invoker.getUrl().getProtocol())) {
             return protocol.export(invoker);
         }
-        return new ListenerExporterWrapper<T>(protocol.export(invoker),
-                Collections.unmodifiableList(ExtensionLoader.getExtensionLoader(ExporterListener.class)
-                        .getActivateExtension(invoker.getUrl(), Constants.EXPORTER_LISTENER_KEY)));
+        // 创建带 ExporterListener 的 Exporter 对象
+        return new ListenerExporterWrapper<T>(
+                // 暴露服务，创建 Exporter 对象
+                protocol.export(invoker),
+                // 获得 ExporterListener 数组
+                Collections.unmodifiableList(ExtensionLoader.getExtensionLoader(ExporterListener.class).getActivateExtension(invoker.getUrl(), Constants.EXPORTER_LISTENER_KEY)));
     }
 
     @Override
